@@ -62,12 +62,14 @@ public class DisplayServlet extends HttpServlet {
 			}
 		}
 		else{
-			out.write("<center><font color=red><h1>No movies to display!!</h1></font><center>");
-			out.print("<center><form method='POST' action='addmovie.jsp'><input type='submit' value='Add movies'></center>");
+			response.sendRedirect("movieerror.jsp");
+
+			//out.write("<center><font color=red><h1>No movies to display!!</h1></font><center>");
+			//out.print("<center><form method='POST' action='addmovie.jsp'><input type='submit' value='Add movies'></center>");
 		}
 		}
 	else{
-		throw new RuntimeException(" Oops!! No movie added yet!");
+		response.sendRedirect("movieerror.jsp");
 	}
 		out.println("<center><h4 style='border-color: maroon;'><a href='desk.html'>Go Back</a></h4><center>");
 		out.close();

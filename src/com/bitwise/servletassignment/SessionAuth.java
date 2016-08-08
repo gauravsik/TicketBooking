@@ -39,7 +39,8 @@ public class SessionAuth implements Filter {
 			{
 				session.invalidate();
 				out.print("<center><font colo=red><h3>Sucessfully Logged Out</h3></center>");
-				req.getRequestDispatcher("desk.html").include(req, res);
+				//req.getRequestDispatcher("desk.html").include(req, res);
+				res.sendRedirect("desk.html");
 			}
 			else {
 				redirect(req, res, out);
