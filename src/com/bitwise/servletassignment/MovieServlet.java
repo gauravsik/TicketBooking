@@ -37,14 +37,17 @@ public class MovieServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession(false);
 		if (request.getParameter("submit").equalsIgnoreCase("add")) {
+			MovieList movieList;
 			if (request.getSession(false).getAttribute("movieList") == null) {
-				MovieList movieList = new MovieList();
+				movieList = new MovieList();
 				movieList.addMovie(new Movie(movieName, theaterName, totalSeatsAvailable, startTime, endTime));
 				session.setAttribute("movieList", movieList);
 			} else {
-				MovieList movieList = (MovieList) session.getAttribute("movieList");
+				movieList = (MovieList) session.getAttribute("movieList");
 				movieList.addMovie(new Movie(movieName, theaterName, totalSeatsAvailable, startTime, endTime));
 			}
+			session.setAttribute("movieList", movieList);
+
 		}
 		
 	if(request.getParameter("submit").equalsIgnoreCase("remove")){

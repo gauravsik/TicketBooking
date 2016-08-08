@@ -32,22 +32,24 @@ public class SessionAuth implements Filter {
 		res.setContentType("text/html");
 		System.out.println(req.getRequestURI());
 		System.out.println("is valid user " + isValidUser(req));
-		
-		if (isLogoutRequest(req)) {
-			System.out.println("Session Invalidated");
-			if(isExistingSession(req))
-			{
-				session.invalidate();
-				out.print("<center><font colo=red><h3>Sucessfully Logged Out</h3></center>");
-				//req.getRequestDispatcher("desk.html").include(req, res);
-				res.sendRedirect("desk.html");
+
+		if (isLoginRequest(req)) {
+			if (isExistingSession(req)) {
+				out.print("<center>Allready logged in</center>");
 			}
-			else {
+		}
+
+		else if (isLogoutRequest(req)) {
+			System.out.println("Session Invalidated");
+			if (isExistingSession(req)) {
+				req.getSession(false).invalidate();
+				out.print("<center><font colo=red><h3>Sucessfully Logged Out</h3></center>");
+				req.getRequestDispatcher("desk.html").include(req, res);
+			} else {
 				redirect(req, res, out);
 				return;
 			}
-		}
-		if (req.getRequestURI().equals("/OnlineTicketBooking/DisplayServlet")) {
+		} else if (req.getRequestURI().equals("/OnlineTicketBooking/DisplayServlet")) {
 			if (!isExistingSession(req)) {
 				redirect(req, res, out);
 				return;
@@ -57,30 +59,27 @@ public class SessionAuth implements Filter {
 				redirect(req, res, out);
 				return;
 			}
-		} 
-	else if (req.getRequestURI().equals("/OnlineTicketBooking/displayhistory.jsp")) {
+		} else if (req.getRequestURI().equals("/OnlineTicketBooking/displayhistory.jsp")) {
 			if (!isExistingSession(req)) {
 				redirect(req, res, out);
 				return;
 			}
-		} 
-		else if (req.getRequestURI().equals("/OnlineTicketBooking/moviebooking.jsp")) {
-				if (!isExistingSession(req)) {
-					redirect(req, res, out);
-					return;
-				}
+		} else if (req.getRequestURI().equals("/OnlineTicketBooking/moviebooking.jsp")) {
+			if (!isExistingSession(req)) {
+				redirect(req, res, out);
+				return;
 			}
-	 
-			chain.doFilter(req, res);
-		
-}
+		}
+
+		chain.doFilter(req, res);
+
+	}
 
 	private void redirect(HttpServletRequest req, HttpServletResponse res, PrintWriter out)
 			throws ServletException, IOException {
 		out.print("<center><font colo=red><h3>Please Login first</h3></center>");
 		req.getRequestDispatcher("loginform.html").include(req, res);
 	}
-
 
 	private boolean isLoginRequest(HttpServletRequest req) {
 		return req.getRequestURI().equals("/OnlineTicketBooking/LoginServlet");
@@ -102,11 +101,9 @@ public class SessionAuth implements Filter {
 		return false;
 	}
 
-	
-	 private boolean isExistingSession(HttpServletRequest req){
-		 return	 req.getSession(false) != null; 
-	 }
-	 
+	private boolean isExistingSession(HttpServletRequest req) {
+		return req.getSession(false) != null;
+	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
 	}

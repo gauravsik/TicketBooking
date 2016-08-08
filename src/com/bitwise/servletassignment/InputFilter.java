@@ -2,6 +2,7 @@ package com.bitwise.servletassignment;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -9,6 +10,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 //@WebFilter(filterName = "MovieFilter", urlPatterns = { "/MovieFilter" })
 public class InputFilter implements Filter {
@@ -25,13 +27,14 @@ public class InputFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		HttpServletRequest req = (HttpServletRequest)request;
 		String movieName = request.getParameter("moviename");
 		String theaterName = request.getParameter("theatername");
 		Integer totalSeatsAvailable = Integer.parseInt(request.getParameter("seatsavailable")) ;
-		//String startTime = request.getParameter("starttime");
-		//String endTime = request.getParameter("endtime");
-		
-		if(movieName == null){
+		String startTime = request.getParameter("starttime");
+		String endTime = request.getParameter("endtime");
+	
+		 if(movieName == null){
 			out.print("<center><font color=red><h1>Inavlid movie name</h1></font></center>");
 			request.getRequestDispatcher("addmovie.jsp").include(request, response);
 			//out.print("<center><form method='POST' action='addmovie.html'><input type='submit' value='Add movies'></center>");

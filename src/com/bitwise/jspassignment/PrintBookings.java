@@ -30,18 +30,18 @@ public class PrintBookings extends TagSupport{
 			        return b1.getDob().compareTo(b2.getDob());
 			    }
 			});
-			
+			out.print("<center><table border=1>");
+			out.print("<tr>");
+			out.print("<td>Customer Name</td>");
+			out.print("<td>Address</td>");
+			out.print("<td>Movie Name</td>");
+			out.print("<td>Phone Number</td>");
+			out.print("<td>Seats</td>");
+			out.print("<td>Date Of Booking</td>");
+			out.print("</tr>");
 			for(Booking b : bookings){
 				try {
-					out.print("<center><table border=1>");
-					out.print("<tr>");
-					out.print("<td>Customer Name</td>");
-					out.print("<td>Address</td>");
-					out.print("<td>Movie Name</td>");
-					out.print("<td>Phone Number</td>");
-					out.print("<td>Seats</td>");
-					out.print("<td>Date Of Booking</td>");
-					out.print("</tr>");
+					
 					out.print("<tr>");
 					out.print("<td>" + b.getCustName() + "</td>");
 					out.print("<td>" + b.getAddress() + "</td>");
@@ -55,10 +55,13 @@ public class PrintBookings extends TagSupport{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		
 			}
 		} catch(Exception e){
-			throw new RuntimeException("Please add movie first");
+			try {
+				response.sendRedirect("movieerror.jsp");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		return SKIP_BODY;
   }

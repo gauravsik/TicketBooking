@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +31,12 @@
 		</tr>
 		<tr>
 			<td>Total Seats Available</td>
-			<td><input type="number" name="seatsavailable" required="required"></td>
+			<td>
+				<select name="seatsavailable">
+				<c:forEach begin="1" end="100" var="i">
+    			<option value="${i}">${i}</option>
+				</c:forEach>
+				</select>
 			</tr>
 		<tr>
 			<td>Start Time</td>

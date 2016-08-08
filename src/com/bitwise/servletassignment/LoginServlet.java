@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+
+import org.apache.catalina.ant.SessionsTask;
 
 //@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -35,8 +38,9 @@ public class LoginServlet extends HttpServlet {
 
 		if (isValidUser(user)) {
 			System.out.println("User is Valid");
-			redirectToDesk(request, response,username);
-			startSession(request, username);
+			redirectToDesk(request, response, username);
+			
+			startSession(request, username, response);
 			return;
 		} else {
 			System.out.println("User is invalid");
@@ -49,8 +53,7 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	private void redirectToLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		request.getRequestDispatcher("loginform.html").include(request, response);
-		
+		request.getRequestDispatcher("loginform.html").include(request, response);	
 	}
 
 	private void redirectToDesk(HttpServletRequest request, HttpServletResponse response, String username) throws IOException, ServletException {
@@ -67,9 +70,10 @@ public class LoginServlet extends HttpServlet {
 		return new RegisteredUsers().getUsersData().contains(user);
 	}
 
-	private void startSession(HttpServletRequest request, String username) {
+	private void startSession(HttpServletRequest request, String username, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession(true);
-		session.setAttribute("username", username);
+		PrintWriter out = response.getWriter();
+		session.setAttribute("username", username);	
 	}
 
 }
