@@ -36,6 +36,10 @@
     <servlet-name>ErrorHandler</servlet-name>
     <url-pattern>/ErrorHandler</url-pattern>
   </servlet-mapping>
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/ErrorHandler</location>
+  </error-page>
   <filter>
     <filter-name>LoginFilter</filter-name>
     <filter-class>com.bitwise.servletassignment.LoginFilter</filter-class>
@@ -44,8 +48,15 @@
     <filter-name>LoginFilter</filter-name>
     <url-pattern>/LoginServlet</url-pattern>
   </filter-mapping>
-  
-    <filter>
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.bitwise.servletassignment.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
+  <filter>
     <filter-name>InputFilter</filter-name>
     <filter-class>com.bitwise.servletassignment.InputFilter</filter-class>
   </filter>
@@ -53,9 +64,36 @@
     <filter-name>InputFilter</filter-name>
     <url-pattern>/MovieServlet</url-pattern>
   </filter-mapping>
-  
-  <error-page>
-    <exception-type>java.lang.Throwable</exception-type>
-    <location>/ErrorHandler</location>
-  </error-page>
+  <filter>
+    <filter-name>SessionAuth</filter-name>
+    <filter-class>com.bitwise.servletassignment.SessionAuth</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SessionAuth</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <servlet-name>BookingServlet</servlet-name>
+    <servlet-class>com.bitwise.jspassignment.BookingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BookingServlet</servlet-name>
+    <url-pattern>/BookingServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>BookMovie</servlet-name>
+    <servlet-class>com.bitwise.jspassignment.BookMovie</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BookMovie</servlet-name>
+    <url-pattern>/BookMovie</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>MovieFilter</filter-name>
+    <filter-class>com.bitwise.jspassignment.MovieFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>MovieFilter</filter-name>
+    <url-pattern>/BookMovie</url-pattern>
+  </filter-mapping>
 </web-app>

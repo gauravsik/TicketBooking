@@ -14,10 +14,13 @@ public class MovieList {
 	
 	public void addMovie(Movie movie) {
 		System.out.println("in addmovie");
-		if(movies.size()<3)
-		movies.add(movie);
+		if(movies.size()<3){
+			System.out.println(movies.size());
+			movies.add(movie);
+		}
+		
 		else{
-			throw new RuntimeException();
+			throw new RuntimeException("Cannot add more than 10 movies!!! <br> try again");
 		}
 	}
 	

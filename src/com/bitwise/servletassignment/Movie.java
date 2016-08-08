@@ -17,6 +17,8 @@ public class Movie {
 		this.endTime = endTime;
 	}
 	
+
+
 	public String getMovieName() {
 		return movieName;
 	}

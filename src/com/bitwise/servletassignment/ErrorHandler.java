@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +19,20 @@ public class ErrorHandler extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<center><font color=red><h1>Cannot Add Movies More Than 10<h1></font><center>");
-		out.print("<center><a href='addmovie.html'>Go back</a></center>");
+	       
+	      Throwable throwable = (Throwable)
+	      request.getAttribute("javax.servlet.error.exception");
+	      response.setContentType("text/html");
+	 
+	      PrintWriter out = response.getWriter();
+	      out.println("<html>\n" + 
+	    		  		"<head><title>Error/Exception Information </title></head>\n" + 
+	    		  		"<body>\n");
+	         out.println("<center><font color=red><h1>" +  throwable.getMessage( ) + 
+	        		 "</h1><font><center>");
+	         out.print("<a href = desk.html> Go Back </a>");
+		     out.println("</body>");
+		     out.println("</html>");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
